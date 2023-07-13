@@ -1,16 +1,21 @@
-# Fetching the latest node image on alpine linux
-FROM node:alpine AS development
-# Declaring env
-ENV NODE_ENV development
-# Setting up the work directory
-WORKDIR /react-app
-# Installing dependencies
-COPY ./package.json /react-app
-# Build the production version of the application
-RUN npm install
-# Copying all the files in our project
+FROM node:alpine as builder
+# Set the working directory to /app inside the container
+WORKDIR /react-app-nginx
+# Copy app files
 COPY . .
-# Expose port 80 to the outside world
+# Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
+RUN npm ci
+# Build the app
+RUN npm run build
+
+# Bundle static assets with nginx
+FROM nginx:1.21.0-alpine as production
+ENV NODE_ENV production
+# Copy built assets from `builder` image
+COPY --from=builder /react-app-nginx/build /usr/share/nginx/html
+# Add your nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port
 EXPOSE 80
-# Starting our application
-CMD npm start
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
