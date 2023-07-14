@@ -1,6 +1,9 @@
 # This is a basic workflow to help you get started with Actions
 name: CI-CD
 
+env:
+  app_version: 1.2.0
+
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
@@ -71,14 +74,14 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.REACTUSERNAME }}/reactapp:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:app_version
 
-      - name: Run the image in a container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ secrets.REACTUSERNAME }}/reactapp:latest
-          run: |
-            echo "runing the docker image"
+#      - name: Run the image in a container
+#        uses: addnab/docker-run-action@v3
+#        with:
+#          image: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:app_version
+#          run: |
+#            echo "running the docker image"
 
 #  push_to_vercel:
 #    runs-on: ubuntu-latest
