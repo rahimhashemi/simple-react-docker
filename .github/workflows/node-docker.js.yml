@@ -2,7 +2,7 @@
 name: CI-CD
 
 env:
-  APP_VERSION: '1.3.0'
+  APP_VERSION: 1.3.0
 
 # Controls when the action will run.
 on:
