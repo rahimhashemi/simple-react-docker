@@ -74,7 +74,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:$APP_VERSION
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:${{APP_VERSION}}
 
 #      - name: Run the image in a container
 #        uses: addnab/docker-run-action@v3
