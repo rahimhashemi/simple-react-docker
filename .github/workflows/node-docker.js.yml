@@ -2,7 +2,7 @@
 name: CI-CD
 
 env:
-  app_version: 1.2.0
+  app_version: 1.3.0
 
 # Controls when the action will run.
 on:
@@ -74,12 +74,12 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:app_version
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:$app_version
 
 #      - name: Run the image in a container
 #        uses: addnab/docker-run-action@v3
 #        with:
-#          image: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:app_version
+#          image: ${{ secrets.DOCKER_USERNAME }}/react-app-nginx:$app_version
 #          run: |
 #            echo "running the docker image"
 
